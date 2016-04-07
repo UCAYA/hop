@@ -5,9 +5,8 @@ import Effects exposing (Effects)
 import Hop
 import Hop.Types exposing (Location, Query, Router, PathMatcher, newLocation)
 import Hop.Matchers exposing (..)
-import Hop.Navigate exposing (navigateTo, setQuery)
 import Languages.Routing
-
+import RoutingCore exposing (locationConfig, navigateTo, setQuery)
 
 --import Languages.Models exposing (LanguageId)
 
@@ -104,12 +103,12 @@ newModel =
 
 -- ROUTER
 
-
 router : Router Route
 router =
   Hop.new
     { matchers = matchers
     , notFound = NotFoundRoute
+    , locationConfig = RoutingCore.locationConfig
     }
 
 

@@ -20,13 +20,17 @@ e.g. location -> "#/users/1?a=1"
 -- was urlToLocation
 
 
-locationToFullPath : Location -> String
-locationToFullPath location =
+locationToFullPath : LocationConfig -> Location -> String
+locationToFullPath locationConfig location =
   let
     path' =
       String.join "/" location.path
+    prefix =
+      case locationConfig of
+        Hash -> "#/"
+        Path -> "/"
   in
-    "#/" ++ path' ++ (queryFromLocation location)
+    prefix ++ path' ++ (queryFromLocation location)
 
 
 
@@ -35,14 +39,7 @@ locationToFullPath location =
 
 locationFromUser : String -> Location
 locationFromUser route =
-  let
-    normalized =
-      if String.startsWith "#" route then
-        route
-      else
-        "#" ++ route
-  in
-    parse normalized
+    parse route
 
 
 {-|
@@ -77,10 +74,6 @@ parse route =
 extractPath : String -> String
 extractPath route =
   route
-    |> String.split "#"
-    |> List.reverse
-    |> List.head
-    |> Maybe.withDefault ""
     |> String.split "?"
     |> List.head
     |> Maybe.withDefault ""
@@ -171,3 +164,18 @@ removeQuery key location =
 clearQuery : Location -> Location
 clearQuery location =
   { location | query = Dict.empty }
+
+
+hashPathToFullPath : String -> String
+hashPathToFullPath location =
+  location
+  |> String.split "#"
+  |> List.reverse
+  |> List.head
+  |> Maybe.withDefault ""
+
+fullPathTransformer : LocationConfig -> String -> String
+fullPathTransformer locationConfig =
+  case locationConfig of
+    Hash -> hashPathToFullPath
+    Path -> \x -> x

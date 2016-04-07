@@ -1,11 +1,12 @@
 module View (..) where
 
 import Html exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onWithOptions)
 import Html.Attributes exposing (class, href, style)
 import Models exposing (..)
 import Actions exposing (..)
 import Routing
+import Json.Decode as Json
 import Languages.View
 import Languages.Routing
 
@@ -53,9 +54,17 @@ menuLink address route label =
 
     action =
       RoutingAction (Routing.NavigateTo path)
+
+    stopperOption =
+      { stopPropagation = False
+      , preventDefault = True
+      }
+
+    onClick address action =
+      onWithOptions "click" stopperOption Json.value (\_ -> Signal.message address action)
   in
     a
-      [ href "//:javascript"
+      [ href "#"
       , class "white px2"
       , onClick address action
       ]

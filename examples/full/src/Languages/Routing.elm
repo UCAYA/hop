@@ -3,9 +3,9 @@ module Languages.Routing (..) where
 import Effects exposing (Effects)
 import Hop.Types exposing (Location, Query, Router, PathMatcher, newLocation)
 import Hop.Matchers exposing (..)
-import Hop.Navigate exposing (navigateTo, setQuery)
+--import Hop.Navigate exposing (navigateTo, setQuery)
 import Languages.Models exposing (..)
-
+import RoutingCore exposing (..)
 
 -- ROUTES
 

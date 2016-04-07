@@ -1,4 +1,4 @@
-module Hop.Types (Config, Router, PathMatcher, Query, Location, newLocation, newQuery) where
+module Hop.Types (HistoryKind(Hash,Path), LocationConfig, Config, Router, PathMatcher, Query, Location, newLocation, newQuery) where
 
 {-|
 
@@ -12,6 +12,10 @@ module Hop.Types (Config, Router, PathMatcher, Query, Location, newLocation, new
 import Dict
 import Task exposing (Task)
 import Combine exposing (Parser)
+
+type HistoryKind =
+  Hash
+  | Path
 
 
 {-| A Dict that holds query parameters
@@ -44,11 +48,15 @@ type alias PathMatcher action =
   }
 
 
+type alias LocationConfig =
+  HistoryKind
+
 {-| Configuration input for Hop.new
 -}
 type alias Config route =
   { matchers : List (PathMatcher route)
   , notFound : route
+  , locationConfig : LocationConfig
   }
 
 

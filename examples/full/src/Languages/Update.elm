@@ -3,7 +3,8 @@ module Languages.Update (..) where
 import Effects exposing (Effects, Never)
 import Debug
 import Hop.Types exposing (..)
-import Hop.Navigate exposing (navigateTo, addQuery, setQuery)
+import RoutingCore exposing (navigateTo, addQuery, setQuery)
+--import Hop.Navigate exposing (navigateTo, addQuery, setQuery)
 import Languages.Models exposing (..)
 import Languages.Actions exposing (..)
 import Languages.Routing

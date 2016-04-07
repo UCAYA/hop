@@ -7,8 +7,8 @@ import StartApp
 import Task exposing (Task)
 import Hop
 import Hop.Matchers exposing (..)
-import Hop.Navigate exposing (navigateTo)
-import Hop.Types exposing (Query, Location, PathMatcher, Router, newLocation)
+import Hop.Navigate
+import Hop.Types exposing (..)
 
 
 -- ROUTES
@@ -26,15 +26,20 @@ matchers =
   , match1 AboutRoute "/about"
   ]
 
+locationConfig : LocationConfig
+locationConfig = Path
 
 router : Router Route
 router =
   Hop.new
     { matchers = matchers
     , notFound = NotFoundRoute
+    , locationConfig = locationConfig
     }
 
 
+navigateTo =
+  Hop.Navigate.navigateTo locationConfig
 
 -- ACTIONS
 
